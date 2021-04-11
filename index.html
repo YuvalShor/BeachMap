@@ -39,9 +39,9 @@
 				   </div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="index.html">Home</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="https://github.com/YuvalShor/BeachMapNode">GitHub</a></li>
+							<li id="homelabel" class="active" role="button"><a id="home">Home</a></li>
+							<li id="aboutlabel"><a id="about" role="button">About</a></li>
+							<li><a href="https://github.com/YuvalShor/BeachMapNode" role="button">GitHub</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 						
@@ -87,7 +87,12 @@
 		<div class="row">
 			<div class="col">
 				<div class="jumbotron" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover;">
-					<iframe src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: auto; border: none;" scrolling = "no"></iframe>
+					<div class="gisapplet" style="width: 100%; height: 100%;">
+						<iframe src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: auto; border: none;" scrolling = "no"></iframe>
+					</div>
+					<div class="about hide" style="width: 100%; height: 100%;">
+						<p>This is where the about text will go.</p>
+					</div>
 				</div>
 			</div>				
 		
@@ -102,6 +107,26 @@
 		</div>
 	</div>
  <!-- /container -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script>
+		$(function(){
+
+		$('#about').click(function(){
+			$('.gisapplet').addClass('hide');
+			$('#homelabel').removeClass('active');
+			$('#aboutlabel').addClass('active');
+			$('.about').removeClass('hide');
+		});
+
+		$('#home').click(function(){
+			$('.about').addClass('hide');
+			$('#aboutlabel').removeClass('active');
+			$('#homelabel').addClass('active');
+			$('.gisapplet').removeClass('hide');
+		});
+
+		})
+		</script>
 		
 		    <!-- Bootstrap core JavaScript
 			================================================== -->
