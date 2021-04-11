@@ -1,0 +1,26 @@
+{
+  "name": "beachmap",
+  "version": "1.0.0",
+  "description": "A small GIS app for mapping Israel's beautiful beaches",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuvalShor/BeachMap.git"
+  },
+  "author": "yuval-shor-hila-tewel-eliad-tzemach",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YuvalShor/BeachMap/issues"
+  },
+  "homepage": "https://github.com/YuvalShor/BeachMap#readme",
+  "engines": {
+    "node": "14.x"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
