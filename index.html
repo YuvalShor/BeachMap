@@ -3,14 +3,14 @@
 	<head>
 		<!-- Bootstrap CSS -->
 		
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 		<!-- Font Awesome CSS -->
 		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 		<!-- jQuery -->
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 		<!-- Bootstrap JS -->
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
-	
+		<script src="https://unpkg.com/darkmode-js@1.3.4/lib/darkmode-js.js"></script>
 		<!-- Required meta tags -->		
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1">
@@ -82,56 +82,71 @@
 		</div>				
 	</div>
 			
-			
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<div class="jumbotron" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover;">
-					<div class="gisapplet" style="width: 100%; height: 100%;">
-						<iframe src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: auto; border: none;" scrolling = "no"></iframe>
-					</div>
-					<div class="about hide" style="width: 100%; height: 100%;">
-						<p>This is where the about text will go.</p>
+				<div class="darkmode-ignore" style="width: 100%; height: 100%;">
+					<div class="jumbotron" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover;">
+						<div class="gisapplet" style="width: 100%; height: 100%;">
+							<iframe src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: auto; border: none;" scrolling = "no"></iframe>
+						</div>
+						<div class="about hide" style="width: 100%; height: 100%;">
+							<p>This is where the about text will go.</p>
+						</div>
 					</div>
 				</div>
-			</div>				
-		
+			</div>
 		
 		<!-- Copyright -->
-		<footer class="d-flex justify-content-center text-center">
-			<p>This project has been created by Hila Tewel, Yuval Shor & Eliad Tzemach for Mark Israel's GIS course</p>
-			<p>Students at Holon Institule of Technology.</p>
-		</footer>
+		<div class="panel panel-default">
+			<div class="d-flex justify-content-center text-center panel-body">
+				<p>This project has been created by Hila Tewel, Yuval Shor & Eliad Tzemach for Mark Israel's GIS course</p>
+				<p>Students at Holon Institule of Technology.</p>
+			</div>
+		</div>
 		<!-- Copyright -->
 		
 		</div>
 	</div>
  <!-- /container -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<script>
-		$(function(){
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+			<script>
+				$(function(){
 
-		$('#about').click(function(){
-			$('.gisapplet').addClass('hide');
-			$('#homelabel').removeClass('active');
-			$('#aboutlabel').addClass('active');
-			$('.about').removeClass('hide');
-		});
+				$('#about').click(function(){
+					$('.gisapplet').addClass('hide');
+					$('#homelabel').removeClass('active');
+					$('#aboutlabel').addClass('active');
+					$('.about').removeClass('hide');
+				});
 
-		$('#home').click(function(){
-			$('.about').addClass('hide');
-			$('#aboutlabel').removeClass('active');
-			$('#homelabel').addClass('active');
-			$('.gisapplet').removeClass('hide');
-		});
+				$('#home').click(function(){
+					$('.about').addClass('hide');
+					$('#aboutlabel').removeClass('active');
+					$('#homelabel').addClass('active');
+					$('.gisapplet').removeClass('hide');
+				});
 
-		})
-		</script>
-		
+				})
+				
+				const darkmode = new Darkmode();
+				darkmode.showWidget();
+				
+			</script>
+			
+			<!-- Openlayers -->
+			<link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" />
+			<script type="text/javascript" src="https://openlayers.org/en/latest/build/ol.js"></script>
+			<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
+
+			<!-- ol-ext -->
+			<link rel="stylesheet" href="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.css" />
+			<script type="text/javascript" src="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.js"></script>
+			
 		    <!-- Bootstrap core JavaScript
 			================================================== -->
 			<!-- Placed at the end of the document so the pages load faster -->
-			<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
 			<!-- The core Firebase JS SDK is always required and must be listed first -->
 			<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>

@@ -21,6 +21,8 @@
     "node": "14.x"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "ol": "^6.5.0",
+    "ol-ext": "^3.1.19"
   }
 }
