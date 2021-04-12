@@ -1,21 +1,22 @@
 #topheader .navbar-nav li > a {
-  color: #333;
   transition: background-color 0.2s, color 0.2s;
+  color: #111;
 }
 #topheader .navbar-nav li > a:hover, #topheader .navbar-nav li > a:focus {
-  background-color: #333;
-  color: #fff;
+	text-decoration: bold;
+	background-color: #111;
+	color: #fff;
 }
 
 #topheader .navbar-nav li.active > a {
-  background-color: #333;
-  color: #fff;
+	text-decoration: bold;
+	background-color: #111;
+	color: #fff;
 }
 
 #login-dp{
     min-width: 250px;
     padding: 14px 14px 0;
-    overflow:hidden;
     background-color:rgba(255,255,255,.9);
 }
 
@@ -24,6 +25,60 @@
     border-top:1px solid #ddd;
     clear:both;
     padding:14px;
+}
+
+#signinBtn {
+	color: white;
+	background-color: #111;
+}
+
+.darkmode-toggle {
+  z-index: 500;
+}
+
+.darkmode--activated footer {
+  color: white;
+}
+
+.darkmode--activated .navbar {
+  background-color: #111;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.darkmode--activated #topheader .navbar-nav li > a {
+  transition: background-color 0.2s, color 0.2s;
+  color: #fff;
+}
+
+.darkmode--activated  #topheader .navbar-nav li > a:hover, #topheader .navbar-nav li > a:focus {
+	text-decoration: bold;
+	background-color: #fff;
+	color: #111;
+}
+
+.darkmode--activated #topheader .navbar-nav li.active > a {
+	text-decoration: bold;
+	background-color: #fff;
+	color: #111;
+}
+
+.darkmode--activated #login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    background-color:rgba(0,0,0,.9);
+}
+
+.darkmode--activated #login-dp .bottom{
+    background-color:rgba(0,0,0,.9);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+
+.darkmode--activated #signinBtn {
+	color: #111;
+	background-color: #fff;
 }
 
 @media(max-width:768px){
