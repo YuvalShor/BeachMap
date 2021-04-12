@@ -20,13 +20,13 @@
 		<title>BeachMap GIS App</title>
 	</head>
 	<body>
-	<div class="container text-center"><img src="./assets/logo.svg" alt="logo" style="width: 170px; height: 90px;"></div>
+	<div class="container text-center animate slideIn"><img src="./assets/logo.svg" alt="logo" style="width: 170px; height: 90px;"></div>
 	<div class="container d-flex justify-content-center">
 		<div class="row">
 		
 		
 			<div id="topheader">
-			  <nav class="navbar navbar-default">
+			  <nav class="navbar navbar-default animate slideIn">
 				<div class="container-fluid">
 				   <div class="navbar-header">
 				   <a class="navbar-brand visible-xs" href="#">BeachMap</a>
@@ -38,7 +38,7 @@
 					  </button>
 				   </div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">
+						<ul class="nav navbar-nav animate slideIn">
 							<li id="homelabel" class="active" role="button"><a id="home">Home</a></li>
 							<li id="aboutlabel"><a id="about" role="button">About</a></li>
 							<li><a href="https://github.com/YuvalShor/BeachMapNode" role="button">GitHub</a></li>
@@ -49,9 +49,9 @@
 							<li class="navbtn"><a href="#" class="loggedinButtons" style="display: none;">Manage App</a></li>
 							<li class="navbtn"><a href="#" class="loggedinButtons" onclick="logout()" style="display: none;">Logout</a></li>
 							
-							<li id="adminLogin" class="dropdown">
+							<li id="adminLogin" class="dropdown animate slideIn">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Admin Login</b> <span class="caret"></span></a>
-								<ul id="login-dp" class="dropdown-menu">
+								<ul id="login-dp" class="dropdown-menu animate slideIn">
 									<li>
 										 <div class="row">
 												<div class="col-md-12">
@@ -86,11 +86,11 @@
 		<div class="row">
 			<div class="col">
 				<div class="darkmode-ignore" style="width: 100%; height: 100%;">
-					<div class="jumbotron" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover;">
-						<div class="gisapplet" style="width: 100%; height: 100%;">
-							<iframe src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: auto; border: none;" scrolling = "no"></iframe>
+					<div class="jumbotron animate slideIn" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover;">
+						<div class="gisapplet animate slideIn" style="width: 100%; height: 100%;">
+							<iframe class="jumbotron" src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: auto; border: none; padding: 0;" scrolling = "no"></iframe>
 						</div>
-						<div class="about hide" style="width: 100%; height: 100%;">
+						<div class="about animate slideIn hide" style="width: 100%; height: 100%;">
 							<p>This is where the about text will go.</p>
 						</div>
 					</div>
@@ -98,7 +98,7 @@
 			</div>
 		
 		<!-- Copyright -->
-		<div class="panel panel-default">
+		<div class="panel panel-default animate slideIn">
 			<div class="d-flex justify-content-center text-center panel-body">
 				<p>This project has been created by Hila Tewel, Yuval Shor & Eliad Tzemach for Mark Israel's GIS course</p>
 				<p>Students at Holon Institule of Technology.</p>
