@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		}
 	  
 		document.getElementById("loggedInEmail").style.display = "block";
-		document.getElementById("loggedInEmail").innerHTML = "Logged in as: <b>" + user.email + "</b>";
+		document.getElementById("loggedInEmail").innerHTML = "<i class='fas fa-user'></i> Logged in as: <b>" + user.email + "</b>";
 	} else {
 		// No user is signed in.
 		document.getElementById("adminLogin").style.display = "block";

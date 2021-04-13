@@ -5,7 +5,7 @@
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 		<!-- Font Awesome CSS -->
-		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+		<link href="./style/all.css" rel="stylesheet">
 		<!-- jQuery -->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<!-- Bootstrap JS -->
@@ -20,15 +20,15 @@
 		<title>BeachMap GIS App</title>
 	</head>
 	<body>
-	<div class="container text-center animate slideIn"><img src="./assets/logo.svg" alt="logo" style="width: 170px; height: 90px;"></div>
+	<div class="container text-center animate slideIn"><img src="./assets/logo.svg" alt="BeachMap Logo" style="width: 170px; height: 90px;"></div>
 	<div class="container justify-content-center">
 		<div class="row">	
 			<div id="topheader">
 			  <nav class="navbar navbar-default">
 				<div class="container-fluid">
 				    <div class="navbar-header">
-						<a class="navbar-brand visible-xs" href="#">BeachMap</a>
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<a class="navbar-brand visible-xs animate slideIn" href="#">BeachMap</a>
+						<button type="button" class="navbar-toggle collapsed animate slideIn" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
@@ -36,19 +36,19 @@
 						</button>
 				    </div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">
-							<li id="homelabel" class="active" role="button"><a id="home">Home</a></li>
-							<li id="aboutlabel"><a id="about" role="button">About</a></li>
-							<li><a href="https://github.com/YuvalShor/BeachMapNode" role="button">GitHub</a></li>
+						<ul class="nav navbar-nav col">
+							<li id="homelabel" class="active" role="button"><a id="home"><i class="fas fa-map-marked-alt"></i> Home</a></li>
+							<li id="aboutlabel"><a id="about" role="button"><i class="fas fa-address-card"></i> About</a></li>
+							<li><a href="https://github.com/YuvalShor/BeachMapNode" role="button"><i class="fab fa-github"></i> GitHub</a></li>
 						</ul>
-						<ul class="nav navbar-nav navbar-right">
+						<ul class="nav navbar-nav navbar-right col">
 						
 							<li class="navbtn"><a href="#" class="loggedinButtons" id="loggedInEmail" style="pointer-events: none; cursor: default; display: none;"></a></li>
-							<li class="navbtn"><a href="#" class="loggedinButtons" style="display: none;">Manage App</a></li>
-							<li class="navbtn"><a href="#" class="loggedinButtons" onclick="logout()" style="display: none;">Logout</a></li>
+							<li class="navbtn"><a href="#" class="loggedinButtons" style="display: none;"><i class="fas fa-user-cog"></i> Manage App</a></li>
+							<li class="navbtn"><a href="#" class="loggedinButtons" onclick="logout()" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 							
 							<li id="adminLogin" class="dropdown">
-							  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Admin Login</b> <span class="caret"></span></a>
+							  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-sign-in-alt"></i> <b>Admin Login</b></a>
 								<ul id="login-dp" class="dropdown-menu animate slideIn">
 									<li>
 										 <div class="row">
@@ -81,11 +81,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-					<div class="jumbotron animate slideIn darkmode-ignore" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover; border-radius: 1px; box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1); width: 100%;">
+					<div class="animate slideIn darkmode-ignore" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover; border-radius: 5px; box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1); width: 100%; padding: 25px;">
 						<div class="gisapplet animate slideIn" style="width: 100%; height: 100%;">
 							<iframe class="jumbotron" src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: auto; border: none; padding: 0;" scrolling = "no"></iframe>
 						</div>
-						<div class="about animate slideIn hide" style="width: 100%; height: 100%;">
+						<div class="about animate slideIn hide" style="width: 100%; height: 100%; font-size: 24px;">
 							<p>This is where the about text will go.</p>
 						</div>
 					</div>
