@@ -12,13 +12,11 @@
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         #map {
-            width: 1100px;
-            height: 712px;
+            height: 98vh;
 			padding: 0;
 			margin: 0;
         }
         </style>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoPWQL69zwDjKwQZFZflnpT16vtEpoeO8&libraries=places"></script>
         <title></title>
     </head>
     <body>
@@ -552,7 +550,7 @@
         function pop__3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2"><strong>רמת זיהום</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -660,13 +658,5 @@
         document.getElementsByClassName('search-button')[0].className +=
          ' fa fa-binoculars';
         </script>
-		<script>
-		new L.Control.GPlaceAutocomplete({
-					callback: function(place){
-						var loc = place.geometry.location;
-						map.setView( [loc.lat(), loc.lng()], 18);
-					}
-				}).addTo(map);
-		</script>
     </body>
 </html>
