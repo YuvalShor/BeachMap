@@ -10,7 +10,8 @@
 		  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
 		  crossorigin=""/>
 		<link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
@@ -27,8 +28,9 @@
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-		  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-		  crossorigin=""></script>
+			integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+			crossorigin="">
+		</script>
 		<script src="js/L.Control.Locate.min.js"></script>
         <script src="js/leaflet-svg-shape-markers.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
@@ -43,6 +45,7 @@
         <script src="data/_1.js"></script>
         <script src="data/_2.js"></script>
         <script src="data/_3.js"></script>
+		
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -662,7 +665,7 @@
             hideMarkerOnCollapse: true,
             propertyName: 'name'}));
         document.getElementsByClassName('search-button')[0].className +=
-         ' fa fa-binoculars';
+         ' fas fa-search';
         </script>
 		
 		<script>
