@@ -25,6 +25,7 @@
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
         <script src="js/leaflet-hash.js"></script>
@@ -36,10 +37,11 @@
         <script src="js/leaflet-search.js"></script>
         <script src="data/_1.js"></script>
         <script src="data/_2.js"></script>
+        <script src="data/_3.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[27.84805034284487,31.305171667587864],[34.47654009214635,40.249733717527626]]);
+        })
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -58,6 +60,9 @@
         .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
             map.setMaxBounds(map.getBounds());
         }
         map.createPane('pane__0');
@@ -444,7 +449,6 @@
             },
         });
         bounds_group.addLayer(layer__1);
-        map.addLayer(layer__1);
         function pop__2(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
@@ -459,12 +463,17 @@
                     <tr>\
                         <td colspan="2"><strong>מותר לרחצה</strong><br />' + (feature.properties['allowed'] !== null ? autolinker.link(feature.properties['allowed'].toLocaleString()) : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>אזור</strong><br />' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style__2_0() {
-            return {
+        function style__2_0(feature) {
+            switch(String(feature.properties['sea'])) {
+                case 'הים האדום':
+                    return {
                 pane: 'pane__2',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -474,8 +483,55 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(225,166,26,1.0)',
+                fillColor: 'rgba(218,72,84,1.0)',
                 interactive: true,
+            }
+                    break;
+                case 'הים התיכון':
+                    return {
+                pane: 'pane__2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(17,213,79,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ים המלח':
+                    return {
+                pane: 'pane__2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(188,140,50,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ימת כנרת':
+                    return {
+                pane: 'pane__2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(47,163,220,1.0)',
+                interactive: true,
+            }
+                    break;
             }
         }
         map.createPane('pane__2');
@@ -492,8 +548,108 @@
         });
         bounds_group.addLayer(layer__2);
         map.addLayer(layer__2);
+        function pop__3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style__3_0(feature) {
+            switch(String(feature.properties['Name'])) {
+                case 'בינוני':
+                    return {
+                pane: 'pane__3',
+                shape: 'diamond',
+                radius: 8.8,
+                opacity: 1,
+                color: 'rgba(128,17,25,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,30,42,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'קל':
+                    return {
+                pane: 'pane__3',
+                shape: 'diamond',
+                radius: 8.8,
+                opacity: 1,
+                color: 'rgba(196,245,33,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(216,219,29,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'קל מאוד':
+                    return {
+                pane: 'pane__3',
+                shape: 'diamond',
+                radius: 8.8,
+                opacity: 1,
+                color: 'rgba(61,128,53,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(84,176,74,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'קל-בינוני':
+                    return {
+                pane: 'pane__3',
+                shape: 'diamond',
+                radius: 9.200000000000001,
+                opacity: 1,
+                color: 'rgba(237,173,24,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,134,5,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane__3');
+        map.getPane('pane__3').style.zIndex = 403;
+        map.getPane('pane__3').style['mix-blend-mode'] = 'normal';
+        var layer__3 = new L.geoJson(json__3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json__3',
+            layerName: 'layer__3',
+            pane: 'pane__3',
+            onEachFeature: pop__3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style__3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer__3);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/_2.png" /> חופים': layer__2,'אטרקציות<br /><table><tr><td style="text-align: center;"><img src="legend/_1_אולםתאטרון0.png" /></td><td>אולם תאטרון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אטרקציה1.png" /></td><td>אטרקציה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אכסניה2.png" /></td><td>אכסניה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרפיקניק3.png" /></td><td>אתר פיקניק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרקמפינג4.png" /></td><td>אתר קמפינג</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתהארחה5.png" /></td><td>בית הארחה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתמלון6.png" /></td><td>בית מלון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתקפה7.png" /></td><td>בית קפה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_בר8.png" /></td><td>בר</td></tr><tr><td style="text-align: center;"><img src="legend/_1_גןחיות9.png" /></td><td>גן חיות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_הוסטל10.png" /></td><td>הוסטל</td></tr><tr><td style="text-align: center;"><img src="legend/_1_חנותמתנות11.png" /></td><td>חנות מתנות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מוזיאון12.png" /></td><td>מוזיאון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מועדוןלילה13.png" /></td><td>מועדון לילה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מסעדה14.png" /></td><td>מסעדה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_נקודתתצפית15.png" /></td><td>נקודת תצפית</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פאב16.png" /></td><td>פאב</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פארק17.png" /></td><td>פארק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קולנוע18.png" /></td><td>קולנוע</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קניון19.png" /></td><td>קניון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_רשתמזוןמהיר20.png" /></td><td>רשת מזון מהיר</td></tr></table>': layer__1,"מפת ישראל": layer__0,}).addTo(map);
+        L.control.layers(baseMaps,{'רמת זיהום<br /><table><tr><td style="text-align: center;"><img src="legend/_3_בינוני0.png" /></td><td>בינוני</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קל1.png" /></td><td>קל</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלמאוד2.png" /></td><td>קל מאוד</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלבינוני3.png" /></td><td>קל-בינוני</td></tr></table>': layer__3,'חופים<br /><table><tr><td style="text-align: center;"><img src="legend/_2_היםהאדום0.png" /></td><td>הים האדום</td></tr><tr><td style="text-align: center;"><img src="legend/_2_היםהתיכון1.png" /></td><td>הים התיכון</td></tr><tr><td style="text-align: center;"><img src="legend/_2_יםהמלח2.png" /></td><td>ים המלח</td></tr><tr><td style="text-align: center;"><img src="legend/_2_ימתכנרת3.png" /></td><td>ימת כנרת</td></tr></table>': layer__2,'אטרקציות<br /><table><tr><td style="text-align: center;"><img src="legend/_1_אולםתאטרון0.png" /></td><td>אולם תאטרון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אטרקציה1.png" /></td><td>אטרקציה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אכסניה2.png" /></td><td>אכסניה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרפיקניק3.png" /></td><td>אתר פיקניק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרקמפינג4.png" /></td><td>אתר קמפינג</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתהארחה5.png" /></td><td>בית הארחה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתמלון6.png" /></td><td>בית מלון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתקפה7.png" /></td><td>בית קפה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_בר8.png" /></td><td>בר</td></tr><tr><td style="text-align: center;"><img src="legend/_1_גןחיות9.png" /></td><td>גן חיות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_הוסטל10.png" /></td><td>הוסטל</td></tr><tr><td style="text-align: center;"><img src="legend/_1_חנותמתנות11.png" /></td><td>חנות מתנות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מוזיאון12.png" /></td><td>מוזיאון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מועדוןלילה13.png" /></td><td>מועדון לילה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מסעדה14.png" /></td><td>מסעדה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_נקודתתצפית15.png" /></td><td>נקודת תצפית</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פאב16.png" /></td><td>פאב</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פארק17.png" /></td><td>פארק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קולנוע18.png" /></td><td>קולנוע</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קניון19.png" /></td><td>קניון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_רשתמזוןמהיר20.png" /></td><td>רשת מזון מהיר</td></tr></table>': layer__1,"מפת ישראל": layer__0,}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
             layer: layer__2,
