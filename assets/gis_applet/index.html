@@ -18,6 +18,7 @@
 			margin: 0;
         }
         </style>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoPWQL69zwDjKwQZFZflnpT16vtEpoeO8&libraries=places"></script>
         <title></title>
     </head>
     <body>
@@ -659,5 +660,13 @@
         document.getElementsByClassName('search-button')[0].className +=
          ' fa fa-binoculars';
         </script>
+		<script>
+		new L.Control.GPlaceAutocomplete({
+					callback: function(place){
+						var loc = place.geometry.location;
+						map.setView( [loc.lat(), loc.lng()], 18);
+					}
+				}).addTo(map);
+		</script>
     </body>
 </html>
