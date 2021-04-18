@@ -17,6 +17,24 @@
 			margin: 0;
         }
         </style>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$('.expandableCollapsibleDiv > img').click(function (e) {
+					var showElementDescription = $(this).parents('.expandableCollapsibleDiv').find('ul');
+
+					if ($(showElementDescription).is(':visible')) {
+						showElementDescription.hide("fast", "swing");
+						$(this).attr("src", "images/up-arrow.jpg");
+
+					} else {
+						showElementDescription.show("fast", "swing");
+						$(this).attr("src", "images/down-arrow.jpg");
+
+					}
+				});
+			});
+		</script>
         <title></title>
     </head>
     <body>
@@ -648,7 +666,7 @@
         });
         bounds_group.addLayer(layer__3);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'רמת זיהום<br /><table><tr><td style="text-align: center;"><img src="legend/_3_בינוני0.png" /></td><td>בינוני</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קל1.png" /></td><td>קל</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלמאוד2.png" /></td><td>קל מאוד</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלבינוני3.png" /></td><td>קל-בינוני</td></tr></table>': layer__3,'חופים<br /><table><tr><td style="text-align: center;"><img src="legend/_2_היםהאדום0.png" /></td><td>הים האדום</td></tr><tr><td style="text-align: center;"><img src="legend/_2_היםהתיכון1.png" /></td><td>הים התיכון</td></tr><tr><td style="text-align: center;"><img src="legend/_2_יםהמלח2.png" /></td><td>ים המלח</td></tr><tr><td style="text-align: center;"><img src="legend/_2_ימתכנרת3.png" /></td><td>ימת כנרת</td></tr></table>': layer__2,'אטרקציות<br /><table><tr><td style="text-align: center;"><img src="legend/_1_אולםתאטרון0.png" /></td><td>אולם תאטרון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אטרקציה1.png" /></td><td>אטרקציה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אכסניה2.png" /></td><td>אכסניה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרפיקניק3.png" /></td><td>אתר פיקניק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרקמפינג4.png" /></td><td>אתר קמפינג</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתהארחה5.png" /></td><td>בית הארחה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתמלון6.png" /></td><td>בית מלון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתקפה7.png" /></td><td>בית קפה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_בר8.png" /></td><td>בר</td></tr><tr><td style="text-align: center;"><img src="legend/_1_גןחיות9.png" /></td><td>גן חיות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_הוסטל10.png" /></td><td>הוסטל</td></tr><tr><td style="text-align: center;"><img src="legend/_1_חנותמתנות11.png" /></td><td>חנות מתנות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מוזיאון12.png" /></td><td>מוזיאון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מועדוןלילה13.png" /></td><td>מועדון לילה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מסעדה14.png" /></td><td>מסעדה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_נקודתתצפית15.png" /></td><td>נקודת תצפית</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פאב16.png" /></td><td>פאב</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פארק17.png" /></td><td>פארק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קולנוע18.png" /></td><td>קולנוע</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קניון19.png" /></td><td>קניון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_רשתמזוןמהיר20.png" /></td><td>רשת מזון מהיר</td></tr></table>': layer__1,"מפת ישראל": layer__0,}).addTo(map);
+        L.control.layers(baseMaps,{'<button type="button" onclick="onClickCol2()"><img id="arrow2" src="./images/bottom-arrow.svg" style="height: 10px; width: 10px;"> חופים</button><br /><div id="content2" style="display: block;"><table><tr><td style="text-align: center;"><img src="legend/_2_היםהאדום0.png" /></td><td>הים האדום</td></tr><tr><td style="text-align: center;"><img src="legend/_2_היםהתיכון1.png" /></td><td>הים התיכון</td></tr><tr><td style="text-align: center;"><img src="legend/_2_יםהמלח2.png" /></td><td>ים המלח</td></tr><tr><td style="text-align: center;"><img src="legend/_2_ימתכנרת3.png" /></td><td>ימת כנרת</td></tr></table></div>': layer__2,'<button type="button" onclick="onClickCol3()"><img id="arrow3" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> אטרקציות</button><br /><div id="content3" style="display: none;"><table><tr><td style="text-align: center;"><img src="legend/_1_אולםתאטרון0.png" /></td><td>אולם תאטרון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אטרקציה1.png" /></td><td>אטרקציה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אכסניה2.png" /></td><td>אכסניה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרפיקניק3.png" /></td><td>אתר פיקניק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרקמפינג4.png" /></td><td>אתר קמפינג</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתהארחה5.png" /></td><td>בית הארחה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתמלון6.png" /></td><td>בית מלון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתקפה7.png" /></td><td>בית קפה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_בר8.png" /></td><td>בר</td></tr><tr><td style="text-align: center;"><img src="legend/_1_גןחיות9.png" /></td><td>גן חיות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_הוסטל10.png" /></td><td>הוסטל</td></tr><tr><td style="text-align: center;"><img src="legend/_1_חנותמתנות11.png" /></td><td>חנות מתנות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מוזיאון12.png" /></td><td>מוזיאון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מועדוןלילה13.png" /></td><td>מועדון לילה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מסעדה14.png" /></td><td>מסעדה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_נקודתתצפית15.png" /></td><td>נקודת תצפית</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פאב16.png" /></td><td>פאב</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פארק17.png" /></td><td>פארק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קולנוע18.png" /></td><td>קולנוע</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קניון19.png" /></td><td>קניון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_רשתמזוןמהיר20.png" /></td><td>רשת מזון מהיר</td></tr></table></div>': layer__1,'<button type="button" onclick="onClickCol1()"><img id="arrow1" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> רמת זיהום</button><br /><div id="content1" style="display: none;"><table><tr><td style="text-align: center;"><img src="legend/_3_בינוני0.png" /></td><td>בינוני</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קל1.png" /></td><td>קל</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלמאוד2.png" /></td><td>קל מאוד</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלבינוני3.png" /></td><td>קל-בינוני</td></tr></table></div>': layer__3,}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
             layer: layer__2,
@@ -658,5 +676,44 @@
         document.getElementsByClassName('search-button')[0].className +=
          ' fa fa-binoculars';
         </script>
+		
+		<script>
+		function onClickCol1() {
+			var content = document.getElementById("content1");
+			var arrow = document.getElementById("arrow1");
+			
+			if (content.style.display === "block") {
+			  content.style.display = "none";
+			  arrow.src = "./images/right-arrow.svg";
+			} else {
+			  content.style.display = "block";
+			  arrow.src = "./images/bottom-arrow.svg";
+			}
+		}
+		function onClickCol2() {
+			var content = document.getElementById("content2");
+			var arrow = document.getElementById("arrow2");
+			
+			if (content.style.display === "block") {
+			  content.style.display = "none";
+			  arrow.src = "./images/right-arrow.svg";
+			} else {
+			  content.style.display = "block";
+			  arrow.src = "./images/bottom-arrow.svg";
+			}
+		}
+		function onClickCol3() {
+			var content = document.getElementById("content3");
+			var arrow = document.getElementById("arrow3");
+			
+			if (content.style.display === "block") {
+			  content.style.display = "none";
+			  arrow.src = "./images/right-arrow.svg";
+			} else {
+			  content.style.display = "block";
+			  arrow.src = "./images/bottom-arrow.svg";
+			}
+		}
+		</script>
     </body>
 </html>
