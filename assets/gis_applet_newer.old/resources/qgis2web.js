@@ -1,4 +1,3 @@
-
 isTracking = false;
 var geolocateControl = (function (Control) {
     geolocateControl = function(opt_options) {
@@ -84,7 +83,9 @@ closer.onclick = function() {
     return false;
 };
 var overlayPopup = new ol.Overlay({
-    element: container
+    element: container,
+    autoPan: true,
+    autoPanAnimation: { duration: 100 }
 });
 
 var expandedAttribution = new ol.control.Attribution({
@@ -100,7 +101,7 @@ var map = new ol.Map({
     overlays: [overlayPopup],
     layers: layersList,
     view: new ol.View({
-        extent: [3484875.769232, 3229829.886144, 4480579.862000, 4092970.620710], maxZoom: 28, minZoom: 1
+         maxZoom: 28, minZoom: 1
     })
 });
 
@@ -108,7 +109,7 @@ var layerSwitcher = new ol.control.LayerSwitcher({tipLabel: "Layers"});
 map.addControl(layerSwitcher);
 
     var searchLayer = new SearchLayer({
-      layer: lyr__2,
+      layer: lyr_beaches_2,
       colName: 'name',
       zoom: 10,
       collapsed: true,
@@ -120,7 +121,7 @@ map.addControl(layerSwitcher);
     .getElementsByTagName('button')[0].className +=
     ' fa fa-binoculars';
     
-map.getView().fit([3484875.769232, 3229829.886144, 4480579.862000, 4092970.620710], map.getSize());
+map.getView().fit([3869510.838132, 3770747.605688, 3873929.042193, 3774611.446190], map.getSize());
 
 var NO_POPUP = 0
 var ALL_FIELDS = 1
