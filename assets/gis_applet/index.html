@@ -9,11 +9,10 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
 		  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
 		  crossorigin=""/>
-		<link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css">
 		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="css/leaflet-search.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         #map {
             height: 98vh;
@@ -27,12 +26,7 @@
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
-        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-			integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-			crossorigin="">
-		</script>
-		<script src="js/L.Control.Locate.min.js"></script>
-        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
         <script src="js/leaflet-hash.js"></script>
@@ -40,13 +34,26 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet-search.js"></script>
         <script src="data/_1.js"></script>
         <script src="data/_2.js"></script>
         <script src="data/_3.js"></script>
-		
         <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
         })
@@ -54,18 +61,6 @@
         map.attributionControl.setPrefix('BeachMap &middot; <a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
-        var measureControl = new L.Control.Measure({
-            position: 'topleft',
-            primaryLengthUnit: 'meters',
-            secondaryLengthUnit: 'kilometers',
-            primaryAreaUnit: 'sqmeters',
-            secondaryAreaUnit: 'hectares'
-        });
-        measureControl.addTo(map);
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .innerHTML = '';
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
             if (bounds_group.getLayers().length) {
@@ -87,357 +82,223 @@
         layer__0;
         map.addLayer(layer__0);
         function pop__1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['fclass'] !== null ? autolinker.link(feature.properties['fclass'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;">' + (feature.properties['fclass'] !== null ? autolinker.link(feature.properties['fclass'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
         function style__1_0(feature) {
+            var restIcon = L.icon({
+                iconUrl: 'images/restaurant.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var barIcon = L.icon({
+                iconUrl: 'images/bar.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var cinemaIcon = L.icon({
+                iconUrl: 'images/cinema.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var giftIcon = L.icon({
+                iconUrl: 'images/gift.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var hotelIcon = L.icon({
+                iconUrl: 'images/hotel.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var museumIcon = L.icon({
+                iconUrl: 'images/museum.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var parkIcon = L.icon({
+                iconUrl: 'images/park.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var shoppingIcon = L.icon({
+                iconUrl: 'images/shopping.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var theatreIcon = L.icon({
+                iconUrl: 'images/theatre.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var viewIcon = L.icon({
+                iconUrl: 'images/view.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+            var zooIcon = L.icon({
+                iconUrl: 'images/zoo.svg',
+                iconSize: [22,29],
+                iconAnchor:   [11, 0], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+            });
+
             switch(String(feature.properties['fclass'])) {
                 case 'אולם תאטרון':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(205,189,45,1.0)',
+                icon: theatreIcon,
                 interactive: true,
             }
                     break;
                 case 'אטרקציה':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(175,234,96,1.0)',
+                icon: viewIcon,
                 interactive: true,
             }
                     break;
                 case 'אכסניה':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(229,48,184,1.0)',
+                icon: hotelIcon,
                 interactive: true,
             }
                     break;
                 case 'אתר פיקניק':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(65,221,190,1.0)',
+                icon: parkIcon,
                 interactive: true,
             }
                     break;
                 case 'אתר קמפינג':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(202,66,129,1.0)',
+                icon: parkIcon,
                 interactive: true,
             }
                     break;
                 case 'בית הארחה':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(186,213,51,1.0)',
+                icon: hotelIcon,
                 interactive: true,
             }
                     break;
                 case 'בית מלון':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(127,221,150,1.0)',
+                icon: hotelIcon,
                 interactive: true,
             }
                     break;
                 case 'בית קפה':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(17,150,222,1.0)',
+                icon: restIcon,
                 interactive: true,
             }
                     break;
                 case 'בר':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(110,88,215,1.0)',
+                icon: barIcon,
                 interactive: true,
             }
                     break;
                 case 'גן חיות':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(220,84,111,1.0)',
+                icon: zooIcon,
                 interactive: true,
             }
                     break;
                 case 'הוסטל':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(167,63,211,1.0)',
+                icon: hotelIcon,
                 interactive: true,
             }
                     break;
                 case 'חנות מתנות':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(118,202,208,1.0)',
+                icon: giftIcon,
                 interactive: true,
             }
                     break;
                 case 'מוזיאון':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(71,201,69,1.0)',
+                icon: museumIcon,
                 interactive: true,
             }
                     break;
                 case 'מועדון לילה':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(87,233,29,1.0)',
+                icon: barIcon,
                 interactive: true,
             }
                     break;
                 case 'מסעדה':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(213,60,46,1.0)',
+                icon: restIcon,
                 interactive: true,
             }
                     break;
                 case 'נקודת תצפית':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(211,155,125,1.0)',
+                icon: viewIcon,
                 interactive: true,
             }
                     break;
                 case 'פאב':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(72,225,154,1.0)',
+                icon: barIcon,
                 interactive: true,
             }
                     break;
                 case 'פארק':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(201,98,204,1.0)',
+                icon: parkIcon,
                 interactive: true,
             }
                     break;
                 case 'קולנוע':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(137,89,200,1.0)',
+                icon: theatreIcon,
                 interactive: true,
             }
                     break;
                 case 'קניון':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(226,159,51,1.0)',
+                icon: shoppingIcon,
                 interactive: true,
             }
                     break;
                 case 'רשת מזון מהיר':
                     return {
-                pane: 'pane__1',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(33,110,235,1.0)',
+                icon: restIcon,
                 interactive: true,
             }
                     break;
             }
         }
+
         map.createPane('pane__1');
         map.getPane('pane__1').style.zIndex = 401;
         map.getPane('pane__1').style['mix-blend-mode'] = 'normal';
@@ -453,93 +314,48 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style__1_0(feature));
+                
+                return L.marker(latlng, style__1_0(feature));
             },
         });
         bounds_group.addLayer(layer__1);
         function pop__2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2"><strong>שם החוף</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;"><strong>שם החוף</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>ים</strong><br />' + (feature.properties['sea'] !== null ? autolinker.link(feature.properties['sea'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;"><strong>ים</strong><br />' + (feature.properties['sea'] !== null ? autolinker.link(feature.properties['sea'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>יישוב</strong><br />' + (feature.properties['city'] !== null ? autolinker.link(feature.properties['city'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;"><strong>יישוב</strong><br />' + (feature.properties['city'] !== null ? autolinker.link(feature.properties['city'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>מותר לרחצה</strong><br />' + (feature.properties['allowed'] !== null ? autolinker.link(feature.properties['allowed'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;"><strong>מותר לרחצה</strong><br />' + (feature.properties['allowed'] !== null ? autolinker.link(feature.properties['allowed'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>אזור</strong><br />' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;"><strong>אזור</strong><br />' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style__2_0(feature) {
-            switch(String(feature.properties['sea'])) {
-                case 'הים האדום':
-                    return {
+        function style__2_0() {
+            return {
                 pane: 'pane__2',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
+                stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(218,72,84,1.0)',
+                fillColor: 'rgba(53,171,255,1.0)',
                 interactive: true,
-            }
-                    break;
-                case 'הים התיכון':
-                    return {
-                pane: 'pane__2',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(17,213,79,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'ים המלח':
-                    return {
-                pane: 'pane__2',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(188,140,50,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'ימת כנרת':
-                    return {
-                pane: 'pane__2',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(47,163,220,1.0)',
-                interactive: true,
-            }
-                    break;
             }
         }
         map.createPane('pane__2');
@@ -557,81 +373,111 @@
         bounds_group.addLayer(layer__2);
         map.addLayer(layer__2);
         function pop__3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2"><strong>רמת זיהום</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2" style="text-align: right;"><strong>שם החוף</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>ים</strong><br />' + (feature.properties['sea'] !== null ? autolinker.link(feature.properties['sea'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>יישוב</strong><br />' + (feature.properties['city'] !== null ? autolinker.link(feature.properties['city'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>מותר לרחצה</strong><br />' + (feature.properties['allowed'] !== null ? autolinker.link(feature.properties['allowed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>אזור</strong><br />' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>רמת זיהום</strong><br />' + (feature.properties['pollution'] !== null ? autolinker.link(feature.properties['pollution'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
         function style__3_0(feature) {
-            switch(String(feature.properties['Name'])) {
-                case 'בינוני':
+            switch(String(feature.properties['pollution'])) {
+                case 'אין מידע':
                     return {
                 pane: 'pane__3',
-                shape: 'diamond',
-                radius: 8.8,
                 opacity: 1,
-                color: 'rgba(128,17,25,1.0)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 2.0,
+                weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(219,30,42,1.0)',
+                fillColor: 'rgba(191,193,187,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'בינוני':
+                    return {
+                pane: 'pane__3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,39,49,1.0)',
                 interactive: true,
             }
                     break;
                 case 'קל':
                     return {
                 pane: 'pane__3',
-                shape: 'diamond',
-                radius: 8.8,
                 opacity: 1,
-                color: 'rgba(196,245,33,1.0)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 2.0,
+                weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(216,219,29,1.0)',
+                fillColor: 'rgba(222,217,59,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'קל בינוני':
+                    return {
+                pane: 'pane__3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(238,140,29,1.0)',
                 interactive: true,
             }
                     break;
                 case 'קל מאוד':
                     return {
                 pane: 'pane__3',
-                shape: 'diamond',
-                radius: 8.8,
                 opacity: 1,
-                color: 'rgba(61,128,53,1.0)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 2.0,
+                weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(84,176,74,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'קל-בינוני':
-                    return {
-                pane: 'pane__3',
-                shape: 'diamond',
-                radius: 9.200000000000001,
-                opacity: 1,
-                color: 'rgba(237,173,24,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 2.0,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(219,134,5,1.0)',
+                fillColor: 'rgba(62,190,83,1.0)',
                 interactive: true,
             }
                     break;
@@ -647,17 +493,11 @@
             layerName: 'layer__3',
             pane: 'pane__3',
             onEachFeature: pop__3,
-            pointToLayer: function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.shapeMarker(latlng, style__3_0(feature));
-            },
+            style: style__3_0,
         });
         bounds_group.addLayer(layer__3);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<button type="button" onclick="onClickCol2()"><img id="arrow2" src="./images/bottom-arrow.svg" style="height: 10px; width: 10px;"> חופים</button><br /><div id="content2" style="display: block;"><table><tr><td style="text-align: center;"><img src="legend/_2_היםהאדום0.png" /></td><td>הים האדום</td></tr><tr><td style="text-align: center;"><img src="legend/_2_היםהתיכון1.png" /></td><td>הים התיכון</td></tr><tr><td style="text-align: center;"><img src="legend/_2_יםהמלח2.png" /></td><td>ים המלח</td></tr><tr><td style="text-align: center;"><img src="legend/_2_ימתכנרת3.png" /></td><td>ימת כנרת</td></tr></table></div>': layer__2,'<button type="button" onclick="onClickCol3()"><img id="arrow3" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> אטרקציות</button><br /><div id="content3" style="display: none;"><table><tr><td style="text-align: center;"><img src="legend/_1_אולםתאטרון0.png" /></td><td>אולם תאטרון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אטרקציה1.png" /></td><td>אטרקציה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אכסניה2.png" /></td><td>אכסניה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרפיקניק3.png" /></td><td>אתר פיקניק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_אתרקמפינג4.png" /></td><td>אתר קמפינג</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתהארחה5.png" /></td><td>בית הארחה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתמלון6.png" /></td><td>בית מלון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_ביתקפה7.png" /></td><td>בית קפה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_בר8.png" /></td><td>בר</td></tr><tr><td style="text-align: center;"><img src="legend/_1_גןחיות9.png" /></td><td>גן חיות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_הוסטל10.png" /></td><td>הוסטל</td></tr><tr><td style="text-align: center;"><img src="legend/_1_חנותמתנות11.png" /></td><td>חנות מתנות</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מוזיאון12.png" /></td><td>מוזיאון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מועדוןלילה13.png" /></td><td>מועדון לילה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_מסעדה14.png" /></td><td>מסעדה</td></tr><tr><td style="text-align: center;"><img src="legend/_1_נקודתתצפית15.png" /></td><td>נקודת תצפית</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פאב16.png" /></td><td>פאב</td></tr><tr><td style="text-align: center;"><img src="legend/_1_פארק17.png" /></td><td>פארק</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קולנוע18.png" /></td><td>קולנוע</td></tr><tr><td style="text-align: center;"><img src="legend/_1_קניון19.png" /></td><td>קניון</td></tr><tr><td style="text-align: center;"><img src="legend/_1_רשתמזוןמהיר20.png" /></td><td>רשת מזון מהיר</td></tr></table></div>': layer__1,'<button type="button" onclick="onClickCol1()"><img id="arrow1" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> רמת זיהום</button><br /><div id="content1" style="display: none;"><table><tr><td style="text-align: center;"><img src="legend/_3_בינוני0.png" /></td><td>בינוני</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קל1.png" /></td><td>קל</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלמאוד2.png" /></td><td>קל מאוד</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלבינוני3.png" /></td><td>קל-בינוני</td></tr></table></div>': layer__3,}).addTo(map);
+        L.control.layers(baseMaps,{'חופים<br />': layer__2,'<button type="button" onclick="onClickCol3()"><img id="arrow3" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> אטרקציות</button><br /><div id="content3" style="display: none;"><table><tr><td style="text-align: center;"><img src="images/theatre.svg" /></td><td>אולם תאטרון</td></tr><tr><td style="text-align: center;"><img src="images/view.svg" /></td><td>אטרקציה</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>אכסניה</td></tr><tr><td style="text-align: center;"><img src="images/park.svg" /></td><td>אתר פיקניק</td></tr><tr><td style="text-align: center;"><img src="images/park.svg" /></td><td>אתר קמפינג</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>בית הארחה</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>בית מלון</td></tr><tr><td style="text-align: center;"><img src="images/restaurant.svg" /></td><td>בית קפה</td></tr><tr><td style="text-align: center;"><img src="images/bar.svg" /></td><td>בר</td></tr><tr><td style="text-align: center;"><img src="images/zoo.svg" /></td><td>גן חיות</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>הוסטל</td></tr><tr><td style="text-align: center;"><img src="images/gift.svg" /></td><td>חנות מתנות</td></tr><tr><td style="text-align: center;"><img src="images/museum.svg" /></td><td>מוזיאון</td></tr><tr><td style="text-align: center;"><img src="images/bar.svg" /></td><td>מועדון לילה</td></tr><tr><td style="text-align: center;"><img src="images/restaurant.svg" /></td><td>מסעדה</td></tr><tr><td style="text-align: center;"><img src="images/view.svg" /></td><td>נקודת תצפית</td></tr><tr><td style="text-align: center;"><img src="images/bar.svg" /></td><td>פאב</td></tr><tr><td style="text-align: center;"><img src="images/park.svg" /></td><td>פארק</td></tr><tr><td style="text-align: center;"><img src="images/cinema.svg" /></td><td>קולנוע</td></tr><tr><td style="text-align: center;"><img src="images/shopping.svg" /></td><td>קניון</td></tr><tr><td style="text-align: center;"><img src="images/restaurant.png" /></td><td>רשת מזון מהיר</td></tr></table></div>': layer__1,'<button type="button" onclick="onClickCol1()"><img id="arrow1" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> רמת זיהום</button><br /><div id="content1" style="display: none;"><table><tr><td style="text-align: center;"><img src="legend/_3_קלמאוד4.png" /></td><td>קל מאוד</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קל2.png" /></td><td>קל</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלבינוני3.png" /></td><td>קל בינוני</td></tr><tr><td style="text-align: center;"><img src="legend/_3_בינוני1.png" /></td><td>בינוני</td></tr></table></div>': layer__3,}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
             layer: layer__2,
@@ -665,46 +505,56 @@
             hideMarkerOnCollapse: true,
             propertyName: 'name'}));
         document.getElementsByClassName('search-button')[0].className +=
-         ' fas fa-search';
+        ' fas fa-search';
+        resetLabels([layer__2]);
+        map.on("zoomend", function(){
+            resetLabels([layer__2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer__2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer__2]);
+        });
         </script>
-		
-		<script>
-		function onClickCol1() {
-			var content = document.getElementById("content1");
-			var arrow = document.getElementById("arrow1");
-			
-			if (content.style.display === "block") {
-			  content.style.display = "none";
-			  arrow.src = "./images/right-arrow.svg";
-			} else {
-			  content.style.display = "block";
-			  arrow.src = "./images/bottom-arrow.svg";
-			}
-		}
-		function onClickCol2() {
-			var content = document.getElementById("content2");
-			var arrow = document.getElementById("arrow2");
-			
-			if (content.style.display === "block") {
-			  content.style.display = "none";
-			  arrow.src = "./images/right-arrow.svg";
-			} else {
-			  content.style.display = "block";
-			  arrow.src = "./images/bottom-arrow.svg";
-			}
-		}
-		function onClickCol3() {
-			var content = document.getElementById("content3");
-			var arrow = document.getElementById("arrow3");
-			
-			if (content.style.display === "block") {
-			  content.style.display = "none";
-			  arrow.src = "./images/right-arrow.svg";
-			} else {
-			  content.style.display = "block";
-			  arrow.src = "./images/bottom-arrow.svg";
-			}
-		}
-		</script>
+
+<script>
+    function onClickCol1() {
+        var content = document.getElementById("content1");
+        var arrow = document.getElementById("arrow1");
+
+        if (content.style.display === "block") {
+          content.style.display = "none";
+          arrow.src = "./images/right-arrow.svg";
+        } else {
+          content.style.display = "block";
+          arrow.src = "./images/bottom-arrow.svg";
+        }
+    }
+    function onClickCol2() {
+        var content = document.getElementById("content2");
+        var arrow = document.getElementById("arrow2");
+
+        if (content.style.display === "block") {
+          content.style.display = "none";
+          arrow.src = "./images/right-arrow.svg";
+        } else {
+          content.style.display = "block";
+          arrow.src = "./images/bottom-arrow.svg";
+        }
+    }
+    function onClickCol3() {
+        var content = document.getElementById("content3");
+        var arrow = document.getElementById("arrow3");
+
+        if (content.style.display === "block") {
+          content.style.display = "none";
+          arrow.src = "./images/right-arrow.svg";
+        } else {
+          content.style.display = "block";
+          arrow.src = "./images/bottom-arrow.svg";
+        }
+    }
+    </script>
     </body>
 </html>
