@@ -9,35 +9,75 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
 		  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
 		  crossorigin=""/>
-        <link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="./css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="./css/qgis2web.css">
 		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="./css/leaflet-search.css">
         <style>
         #map {
             height: 98vh;
 			padding: 0;
 			margin: 0;
         }
+		
+		.btn {
+			font-size: 12px;
+			padding: 4px 12px;
+			margin-bottom: 5px;
+			border-radius: 8px;
+			display: inline-block;
+			text-decoration: none;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: middle;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+		}
+		.btn:focus,
+		.btn:active:focus {
+			outline: thin dotted;
+			outline: 5px auto -webkit-focus-ring-color;
+			outline-offset: -2px;
+		}
+		.btn:hover,
+		.btn:focus {
+			color: #333;
+			text-decoration: none;
+		}
+		.btn:active {
+			background-image: none;
+			outline: 0;
+			-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+			box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+		}
+		.btn-info{color:#fff;background-color:#17a2b8;border-color:#17a2b8}.btn-info:hover{color:#fff;background-color:#138496;border-color:#117a8b}.btn-info.focus,.btn-info:focus{box-shadow:0 0 0 .2rem rgba(58,176,195,.5)}.btn-info.disabled,.btn-info:disabled{color:#fff;background-color:#17a2b8;border-color:#17a2b8}.btn-info:not(:disabled):not(.disabled).active,.btn-info:not(:disabled):not(.disabled):active,.show>.btn-info.dropdown-toggle{color:#fff;background-color:#117a8b;border-color:#10707f}.btn-info:not(:disabled):not(.disabled).active:focus,.btn-info:not(:disabled):not(.disabled):active:focus,.show>.btn-info.dropdown-toggle:focus{box-shadow:0 0 0 .2rem rgba(58,176,195,.5)}
         </style>
         <title></title>
     </head>
     <body>
         <div id="map">
         </div>
-        <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-        <script src="js/leaflet-search.js"></script>
-        <script src="data/_1.js"></script>
-        <script src="data/_2.js"></script>
-        <script src="data/_3.js"></script>
+        <script src="./js/qgis2web_expressions.js"></script>
+        <script src="./js/leaflet.js"></script>
+		<script src="./js/L.Control.Locate.min.js"></script>
+        <script src="./js/leaflet.rotatedMarker.js"></script>
+        <script src="./js/leaflet.pattern.js"></script>
+        <script src="./js/leaflet-hash.js"></script>
+        <script src="./js/Autolinker.min.js"></script>
+        <script src="./js/rbush.min.js"></script>
+        <script src="./js/labelgun.min.js"></script>
+        <script src="./js/labels.js"></script>
+        <script src="./js/leaflet-search.js"></script>
+        <script src="./data/_1.js"></script>
+        <script src="./data/_2.js"></script>
+        <script src="./data/_3.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -55,7 +95,7 @@
             }
         }
         var map = L.map('map', {
-            zoomControl:true, maxZoom:28, minZoom:1
+            zoomControl:true, maxZoom:19, minZoom:1
         })
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('BeachMap &middot; <a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
@@ -75,7 +115,7 @@
             opacity: 1.0,
             attribution: '',
             minZoom: 1,
-            maxZoom: 28,
+            maxZoom: 19,
             minNativeZoom: 0,
             maxNativeZoom: 19
         });
@@ -498,7 +538,11 @@
         });
         bounds_group.addLayer(layer__3);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'חופים<br />': layer__2,'<button type="button" onclick="onClickCol3()"><img id="arrow3" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> אטרקציות</button><br /><div id="content3" style="display: none;"><table><tr><td style="text-align: center;"><img src="images/theatre.svg" /></td><td>אולם תאטרון</td></tr><tr><td style="text-align: center;"><img src="images/view.svg" /></td><td>אטרקציה</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>אכסניה</td></tr><tr><td style="text-align: center;"><img src="images/park.svg" /></td><td>אתר פיקניק</td></tr><tr><td style="text-align: center;"><img src="images/park.svg" /></td><td>אתר קמפינג</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>בית הארחה</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>בית מלון</td></tr><tr><td style="text-align: center;"><img src="images/restaurant.svg" /></td><td>בית קפה</td></tr><tr><td style="text-align: center;"><img src="images/bar.svg" /></td><td>בר</td></tr><tr><td style="text-align: center;"><img src="images/zoo.svg" /></td><td>גן חיות</td></tr><tr><td style="text-align: center;"><img src="images/hotel.svg" /></td><td>הוסטל</td></tr><tr><td style="text-align: center;"><img src="images/gift.svg" /></td><td>חנות מתנות</td></tr><tr><td style="text-align: center;"><img src="images/museum.svg" /></td><td>מוזיאון</td></tr><tr><td style="text-align: center;"><img src="images/bar.svg" /></td><td>מועדון לילה</td></tr><tr><td style="text-align: center;"><img src="images/restaurant.svg" /></td><td>מסעדה</td></tr><tr><td style="text-align: center;"><img src="images/view.svg" /></td><td>נקודת תצפית</td></tr><tr><td style="text-align: center;"><img src="images/bar.svg" /></td><td>פאב</td></tr><tr><td style="text-align: center;"><img src="images/park.svg" /></td><td>פארק</td></tr><tr><td style="text-align: center;"><img src="images/cinema.svg" /></td><td>קולנוע</td></tr><tr><td style="text-align: center;"><img src="images/shopping.svg" /></td><td>קניון</td></tr><tr><td style="text-align: center;"><img src="images/restaurant.png" /></td><td>רשת מזון מהיר</td></tr></table></div>': layer__1,'<button type="button" onclick="onClickCol1()"><img id="arrow1" src="./images/right-arrow.svg" style="height: 10px; width: 10px;"> רמת זיהום</button><br /><div id="content1" style="display: none;"><table><tr><td style="text-align: center;"><img src="legend/_3_קלמאוד4.png" /></td><td>קל מאוד</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קל2.png" /></td><td>קל</td></tr><tr><td style="text-align: center;"><img src="legend/_3_קלבינוני3.png" /></td><td>קל בינוני</td></tr><tr><td style="text-align: center;"><img src="legend/_3_בינוני1.png" /></td><td>בינוני</td></tr></table></div>': layer__3,}).addTo(map);
+        L.control.layers(baseMaps, {
+			'<button type="button" class="btn btn-info"> <i class="fas fa-umbrella-beach"></i> חופים בישראל</button><br />': layer__2,
+			'<button type="button" class="btn btn-info" onclick="onClickCol1()"><img id="arrow1" src="./images/right-arrow.svg" style="height: 10px; width: 10px;" /> <i class="fas fa-recycle"></i> רמת זיהום</button><br /><div id="content1" style="display: none;"><table style="text-align: right; margin: auto;"><tr><td style="padding-left: 5px;">קל מאוד</td><td style="padding-left: 5px;"><img src="legend/_3_קלמאוד4.png" /></td></tr><tr><td style="padding-left: 5px;">קל</td><td style="padding-left: 5px;"><img src="legend/_3_קל2.png" /></td></tr><tr><td style="padding-left: 5px;">קל בינוני</td><td style="padding-left: 5px;"><img src="legend/_3_קלבינוני3.png" /></td></tr><tr><td style="padding-left: 5px;">בינוני </td><td style="padding-left: 5px;"><img src="legend/_3_בינוני1.png" /></td></tr></table></div>': layer__3,
+			'<button type="button" class="btn btn-info" onclick="onClickCol3()"><img id="arrow3" src="./images/right-arrow.svg" style="height: 10px; width: 10px;" /> <i class="fas fa-thumbs-up"></i> אטרקציות</button><br /><div id="content3" style="display: none;"><table style="text-align: right; margin: auto;"><tr><td style="padding-left: 5px;"><img src="images/theatre.svg" /></td><td style="padding-left: 5px;">אולם תאטרון</td></tr><tr><td style="padding-left: 5px;"><img src="images/view.svg" /></td><td style="padding-left: 5px;">אטרקציה</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">אכסניה</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">אתר פיקניק</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">אתר קמפינג</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">בית הארחה</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">בית מלון</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.svg" /></td><td style="padding-left: 5px;">בית קפה</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">בר</td></tr><tr><td style="padding-left: 5px;"><img src="images/zoo.svg" /></td><td style="padding-left: 5px;">גן חיות</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">הוסטל</td></tr><tr><td style="padding-left: 5px;"><img src="images/gift.svg" /></td><td style="padding-left: 5px;">חנות מתנות</td></tr><tr><td style="padding-left: 5px;"><img src="images/museum.svg" /></td><td style="padding-left: 5px;">מוזיאון</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">מועדון לילה</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.svg" /></td><td style="padding-left: 5px;">מסעדה</td></tr><tr><td style="padding-left: 5px;"><img src="images/view.svg" /></td><td style="padding-left: 5px;">נקודת תצפית</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">פאב</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">פארק</td></tr><tr><td style="padding-left: 5px;"><img src="images/cinema.svg" /></td><td style="padding-left: 5px;">קולנוע</td></tr><tr><td style="padding-left: 5px;"><img src="images/shopping.svg" /></td><td style="padding-left: 5px;">קניון</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.png" /></td><td style="padding-left: 5px;">רשת מזון מהיר</td></tr></table></div>': layer__1,
+		}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
             layer: layer__2,
@@ -523,18 +567,6 @@
     function onClickCol1() {
         var content = document.getElementById("content1");
         var arrow = document.getElementById("arrow1");
-
-        if (content.style.display === "block") {
-          content.style.display = "none";
-          arrow.src = "./images/right-arrow.svg";
-        } else {
-          content.style.display = "block";
-          arrow.src = "./images/bottom-arrow.svg";
-        }
-    }
-    function onClickCol2() {
-        var content = document.getElementById("content2");
-        var arrow = document.getElementById("arrow2");
 
         if (content.style.display === "block") {
           content.style.display = "none";
