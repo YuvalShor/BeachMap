@@ -19,7 +19,7 @@
 			padding: 0;
 			margin: 0;
         }
-		
+
 		.btn {
 			font-size: 12px;
 			padding: 4px 12px;
@@ -64,20 +64,21 @@
     <body>
         <div id="map">
         </div>
-        <script src="./js/qgis2web_expressions.js"></script>
-        <script src="./js/leaflet.js"></script>
-		<script src="./js/L.Control.Locate.min.js"></script>
-        <script src="./js/leaflet.rotatedMarker.js"></script>
-        <script src="./js/leaflet.pattern.js"></script>
-        <script src="./js/leaflet-hash.js"></script>
-        <script src="./js/Autolinker.min.js"></script>
-        <script src="./js/rbush.min.js"></script>
-        <script src="./js/labelgun.min.js"></script>
-        <script src="./js/labels.js"></script>
-        <script src="./js/leaflet-search.js"></script>
-        <script src="./data/_1.js"></script>
-        <script src="./data/_2.js"></script>
-        <script src="./data/_3.js"></script>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/_1.js"></script>
+        <script src="data/_2.js"></script>
+        <script src="data/_3.js"></script>
+        <script src="data/_4.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -98,7 +99,7 @@
             zoomControl:true, maxZoom:19, minZoom:1
         })
         var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('BeachMap &middot; <a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
         var bounds_group = new L.featureGroup([]);
@@ -131,7 +132,7 @@
                 mouseover: highlightFeature,
             });
             var popupContent = '<table>\
-                    <tr>\
+                    <tr style="font-weight: bold;">\
                         <td colspan="2" style="text-align: right;">' + (feature.properties['fclass'] !== null ? autolinker.link(feature.properties['fclass'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
@@ -214,7 +215,7 @@
                     return {
                 icon: theatreIcon,
                 interactive: true,
-            }
+                }
                     break;
                 case 'אטרקציה':
                     return {
@@ -338,7 +339,6 @@
                     break;
             }
         }
-
         map.createPane('pane__1');
         map.getPane('pane__1').style.zIndex = 401;
         map.getPane('pane__1').style['mix-blend-mode'] = 'normal';
@@ -354,7 +354,6 @@
                     feature: feature,
                     variables: {}
                 };
-                
                 return L.marker(latlng, style__1_0(feature));
             },
         });
@@ -391,11 +390,11 @@
         function style__2_0() {
             return {
                 pane: 'pane__2',
-                stroke: false,
+                stroke: true,
+                color: 'rgba(238,144,52,1.0)',
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(53,171,255,1.0)',
-                stroke: true,
+                fillColor: 'rgba(255,200,1,1.0)',
                 interactive: true,
             }
         }
@@ -427,6 +426,65 @@
                         <td colspan="2" style="text-align: right;"><strong>שם החוף</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>יישוב</strong><br />' + (feature.properties['city'] !== null ? autolinker.link(feature.properties['city'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>חניה</strong><br />' + (feature.properties['parking'] !== null ? autolinker.link(feature.properties['parking'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>שירותים ומקלחות</strong><br />' + (feature.properties['bathroom'] !== null ? autolinker.link(feature.properties['bathroom'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>הנגשה לצל</strong><br />' + (feature.properties['shade'] !== null ? autolinker.link(feature.properties['shade'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>גישה למים</strong><br />' + (feature.properties['water'] !== null ? autolinker.link(feature.properties['water'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>כיסאות רחצה לנכים</strong><br />' + (feature.properties['handicapped chairs'] !== null ? autolinker.link(feature.properties['handicapped chairs'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style__3_0() {
+            return {
+                pane: 'pane__3',
+                stroke: true,
+                color: 'rgba(35,152,203,1.0)', 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(53,171,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane__3');
+        map.getPane('pane__3').style.zIndex = 403;
+        map.getPane('pane__3').style['mix-blend-mode'] = 'normal';
+        var layer__3 = new L.geoJson(json__3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json__3',
+            layerName: 'layer__3',
+            pane: 'pane__3',
+            onEachFeature: pop__3,
+            style: style__3_0,
+        });
+        bounds_group.addLayer(layer__3);
+        function pop__4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2" style="text-align: right;"><strong>שם החוף</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
                         <td colspan="2" style="text-align: right;"><strong>ים</strong><br />' + (feature.properties['sea'] !== null ? autolinker.link(feature.properties['sea'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
@@ -445,11 +503,11 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style__3_0(feature) {
+        function style__4_0(feature) {
             switch(String(feature.properties['pollution'])) {
                 case 'אין מידע':
                     return {
-                pane: 'pane__3',
+                pane: 'pane__4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -464,7 +522,7 @@
                     break;
                 case 'בינוני':
                     return {
-                pane: 'pane__3',
+                pane: 'pane__4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -479,7 +537,7 @@
                     break;
                 case 'קל':
                     return {
-                pane: 'pane__3',
+                pane: 'pane__4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -494,7 +552,7 @@
                     break;
                 case 'קל בינוני':
                     return {
-                pane: 'pane__3',
+                pane: 'pane__4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -509,7 +567,7 @@
                     break;
                 case 'קל מאוד':
                     return {
-                pane: 'pane__3',
+                pane: 'pane__4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -524,24 +582,25 @@
                     break;
             }
         }
-        map.createPane('pane__3');
-        map.getPane('pane__3').style.zIndex = 403;
-        map.getPane('pane__3').style['mix-blend-mode'] = 'normal';
-        var layer__3 = new L.geoJson(json__3, {
+        map.createPane('pane__4');
+        map.getPane('pane__4').style.zIndex = 404;
+        map.getPane('pane__4').style['mix-blend-mode'] = 'normal';
+        var layer__4 = new L.geoJson(json__4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json__3',
-            layerName: 'layer__3',
-            pane: 'pane__3',
-            onEachFeature: pop__3,
-            style: style__3_0,
+            dataVar: 'json__4',
+            layerName: 'layer__4',
+            pane: 'pane__4',
+            onEachFeature: pop__4,
+            style: style__4_0,
         });
-        bounds_group.addLayer(layer__3);
+        bounds_group.addLayer(layer__4);
         var baseMaps = {};
         L.control.layers(baseMaps, {
+            '<button type="button" class="btn btn-info" onclick="onClickColPollution()"><img id="arrow1" src="./images/right-arrow.svg" style="height: 10px; width: 10px;" /> <i class="fas fa-recycle"></i> רמת זיהום</button><br /><div id="content1" style="display: none;"><table style="text-align: right; margin: auto;"><tr><td style="padding-left: 5px;">קל מאוד</td><td style="padding-left: 5px;"><img src="legend/_4_קלמאוד4.png" /></td></tr><tr><td style="padding-left: 5px;">קל</td><td style="padding-left: 5px;"><img src="legend/_4_קל2.png" /></td></tr><tr><td style="padding-left: 5px;">קל בינוני</td><td style="padding-left: 5px;"><img src="legend/_4_קלבינוני3.png" /></td></tr><tr><td style="padding-left: 5px;">בינוני </td><td style="padding-left: 5px;"><img src="legend/_4_בינוני1.png" /></td></tr></table></div>': layer__4,
+            '<button type="button" class="btn btn-info"> <i class="fas fa-wheelchair"></i> נגישות</button><br />': layer__3,
 			'<button type="button" class="btn btn-info"> <i class="fas fa-umbrella-beach"></i> חופים בישראל</button><br />': layer__2,
-			'<button type="button" class="btn btn-info" onclick="onClickCol1()"><img id="arrow1" src="./images/right-arrow.svg" style="height: 10px; width: 10px;" /> <i class="fas fa-recycle"></i> רמת זיהום</button><br /><div id="content1" style="display: none;"><table style="text-align: right; margin: auto;"><tr><td style="padding-left: 5px;">קל מאוד</td><td style="padding-left: 5px;"><img src="legend/_3_קלמאוד4.png" /></td></tr><tr><td style="padding-left: 5px;">קל</td><td style="padding-left: 5px;"><img src="legend/_3_קל2.png" /></td></tr><tr><td style="padding-left: 5px;">קל בינוני</td><td style="padding-left: 5px;"><img src="legend/_3_קלבינוני3.png" /></td></tr><tr><td style="padding-left: 5px;">בינוני </td><td style="padding-left: 5px;"><img src="legend/_3_בינוני1.png" /></td></tr></table></div>': layer__3,
-			'<button type="button" class="btn btn-info" onclick="onClickCol3()"><img id="arrow3" src="./images/right-arrow.svg" style="height: 10px; width: 10px;" /> <i class="fas fa-thumbs-up"></i> אטרקציות</button><br /><div id="content3" style="display: none;"><table style="text-align: right; margin: auto;"><tr><td style="padding-left: 5px;"><img src="images/theatre.svg" /></td><td style="padding-left: 5px;">אולם תאטרון</td></tr><tr><td style="padding-left: 5px;"><img src="images/view.svg" /></td><td style="padding-left: 5px;">אטרקציה</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">אכסניה</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">אתר פיקניק</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">אתר קמפינג</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">בית הארחה</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">בית מלון</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.svg" /></td><td style="padding-left: 5px;">בית קפה</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">בר</td></tr><tr><td style="padding-left: 5px;"><img src="images/zoo.svg" /></td><td style="padding-left: 5px;">גן חיות</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">הוסטל</td></tr><tr><td style="padding-left: 5px;"><img src="images/gift.svg" /></td><td style="padding-left: 5px;">חנות מתנות</td></tr><tr><td style="padding-left: 5px;"><img src="images/museum.svg" /></td><td style="padding-left: 5px;">מוזיאון</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">מועדון לילה</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.svg" /></td><td style="padding-left: 5px;">מסעדה</td></tr><tr><td style="padding-left: 5px;"><img src="images/view.svg" /></td><td style="padding-left: 5px;">נקודת תצפית</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">פאב</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">פארק</td></tr><tr><td style="padding-left: 5px;"><img src="images/cinema.svg" /></td><td style="padding-left: 5px;">קולנוע</td></tr><tr><td style="padding-left: 5px;"><img src="images/shopping.svg" /></td><td style="padding-left: 5px;">קניון</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.png" /></td><td style="padding-left: 5px;">רשת מזון מהיר</td></tr></table></div>': layer__1,
+			'<button type="button" class="btn btn-info" onclick="onClickColAttractions()"><img id="arrow3" src="./images/right-arrow.svg" style="height: 10px; width: 10px;" /> <i class="fas fa-thumbs-up"></i> אטרקציות</button><br /><div id="content3" style="display: none;"><table style="text-align: right; margin: auto;"><tr><td style="padding-left: 5px;"><img src="images/theatre.svg" /></td><td style="padding-left: 5px;">אולם תאטרון</td></tr><tr><td style="padding-left: 5px;"><img src="images/view.svg" /></td><td style="padding-left: 5px;">אטרקציה</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">אכסניה</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">אתר פיקניק</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">אתר קמפינג</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">בית הארחה</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">בית מלון</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.svg" /></td><td style="padding-left: 5px;">בית קפה</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">בר</td></tr><tr><td style="padding-left: 5px;"><img src="images/zoo.svg" /></td><td style="padding-left: 5px;">גן חיות</td></tr><tr><td style="padding-left: 5px;"><img src="images/hotel.svg" /></td><td style="padding-left: 5px;">הוסטל</td></tr><tr><td style="padding-left: 5px;"><img src="images/gift.svg" /></td><td style="padding-left: 5px;">חנות מתנות</td></tr><tr><td style="padding-left: 5px;"><img src="images/museum.svg" /></td><td style="padding-left: 5px;">מוזיאון</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">מועדון לילה</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.svg" /></td><td style="padding-left: 5px;">מסעדה</td></tr><tr><td style="padding-left: 5px;"><img src="images/view.svg" /></td><td style="padding-left: 5px;">נקודת תצפית</td></tr><tr><td style="padding-left: 5px;"><img src="images/bar.svg" /></td><td style="padding-left: 5px;">פאב</td></tr><tr><td style="padding-left: 5px;"><img src="images/park.svg" /></td><td style="padding-left: 5px;">פארק</td></tr><tr><td style="padding-left: 5px;"><img src="images/cinema.svg" /></td><td style="padding-left: 5px;">קולנוע</td></tr><tr><td style="padding-left: 5px;"><img src="images/shopping.svg" /></td><td style="padding-left: 5px;">קניון</td></tr><tr><td style="padding-left: 5px;"><img src="images/restaurant.png" /></td><td style="padding-left: 5px;">רשת מזון מהיר</td></tr></table></div>': layer__1,
 		}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
@@ -550,44 +609,44 @@
             hideMarkerOnCollapse: true,
             propertyName: 'name'}));
         document.getElementsByClassName('search-button')[0].className +=
-        ' fas fa-search';
-        resetLabels([layer__2]);
+         ' fas fa-search';
+        resetLabels([layer__2,layer__3]);
         map.on("zoomend", function(){
-            resetLabels([layer__2]);
+            resetLabels([layer__2,layer__3]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer__2]);
+            resetLabels([layer__2,layer__3]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer__2]);
+            resetLabels([layer__2,layer__3]);
         });
         </script>
 
-<script>
-    function onClickCol1() {
-        var content = document.getElementById("content1");
-        var arrow = document.getElementById("arrow1");
+    <script>
+        function onClickColPollution() {
+            var content = document.getElementById("content1");
+            var arrow = document.getElementById("arrow1");
 
-        if (content.style.display === "block") {
-          content.style.display = "none";
-          arrow.src = "./images/right-arrow.svg";
-        } else {
-          content.style.display = "block";
-          arrow.src = "./images/bottom-arrow.svg";
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            arrow.src = "./images/right-arrow.svg";
+            } else {
+            content.style.display = "block";
+            arrow.src = "./images/bottom-arrow.svg";
+            }
         }
-    }
-    function onClickCol3() {
-        var content = document.getElementById("content3");
-        var arrow = document.getElementById("arrow3");
+        function onClickColAttractions() {
+            var content = document.getElementById("content3");
+            var arrow = document.getElementById("arrow3");
 
-        if (content.style.display === "block") {
-          content.style.display = "none";
-          arrow.src = "./images/right-arrow.svg";
-        } else {
-          content.style.display = "block";
-          arrow.src = "./images/bottom-arrow.svg";
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            arrow.src = "./images/right-arrow.svg";
+            } else {
+            content.style.display = "block";
+            arrow.src = "./images/bottom-arrow.svg";
+            }
         }
-    }
     </script>
     </body>
 </html>
