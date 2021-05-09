@@ -31,19 +31,20 @@
 		</script>
 		<script src="./js/script.js"></script>
 		<script>
-
 				firebase.auth().onAuthStateChanged(function(user) {
 					if (!user) { 
 						window.alert('Not connected to admin.');
-						self.parent.location='index.html';
+						document.getElementById('body').style.display = "none";
+						window.parent.document.getElementById('adminPage').setAttribute('src', '#');
 					}
 					else {
 						document.getElementById('body').style.display = "block";
+						window.parent.document.getElementById('adminPage').setAttribute('src', 'admin.html');
 					}
-				}); 
+				});
 		</script>
 	</head>
-	<body id="body" style="background: none; font-size: 16px; display: none;">
+	<body id="body" style="background: none;font-size: 16px; display: none;">
 		
         <b>App Management Menu</b>
         <br />
