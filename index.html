@@ -45,7 +45,6 @@
 						
 							<li class="navbtn"><a href="#" class="loggedinButtons" id="loggedInEmail" style="pointer-events: none; cursor: default; display: none;"></a></li>
 							<li class="navbtn" id="adminlabel" role="button"><a id="admin" class="loggedinButtons" role="button" style="display: none;"><i class="fas fa-user-cog"></i> Manage App</a></li>
-							<!-- <li class="navbtn" id="adminlabel" role="button"><a href="#" id="admin" class="loggedinButtons" style="display: none;"><i class="fas fa-user-cog"></i> Manage App</a></li> !-->
 							<li class="navbtn"><a href="#" class="loggedinButtons" onclick="logout()" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 							
 							<li id="adminLogin" class="dropdown">
@@ -89,7 +88,7 @@
 					<iframe class="jumbotron" src="about.html" title="BeachMap GIS Applet" style="background: none; width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
 				</div>
 				<div class="admin animate slideIn hide" style="width: 100%; height: 100%; font-size: 24px;">
-					<iframe class="jumbotron" src="admin.html" title="BeachMap App Management" style="background: none; width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
+					<iframe class="jumbotron" id="adminPage" src="#" title="BeachMap App Management" style="background: none; width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
 				</div>
 			</div>
 		</div>
@@ -119,6 +118,7 @@
 						$('.about').removeClass('hide');
 						$('#adminlabel').removeClass('active');
 						$('.admin').addClass('hide');
+						$('#adminPage').attr('src', "#");
 					});
 
 					$('#home').click(function(){
@@ -128,6 +128,7 @@
 						$('.gisapplet').removeClass('hide');
 						$('#adminlabel').removeClass('active');
 						$('.admin').addClass('hide');
+						$('#adminPage').attr('src', "#");
 					});
 					
 					$('#admin').click(function(){

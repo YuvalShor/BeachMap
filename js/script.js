@@ -33,7 +33,7 @@ function login() {
 		.then((userCredential) => {
 		// Signed in
 		var user = userCredential.user;
-		// ...
+		$('#adminPage').attr('src', "admin.html");
 		})
 		.catch((error) => {
 			var errorCode = error.code;
@@ -49,6 +49,14 @@ function logout() {
 		}).catch((error) => {
 	  // An error happened.
 	});
+
+	$('.about').addClass('hide');
+	$('#aboutlabel').removeClass('active');
+	$('#homelabel').addClass('active');
+	$('.gisapplet').removeClass('hide');
+	$('#adminlabel').removeClass('active');
+	$('.admin').addClass('hide');
+	$('#adminPage').attr('src', "#");
 }
 
 function forgotPassword() {
