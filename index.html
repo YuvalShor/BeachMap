@@ -38,13 +38,14 @@
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav col">
 							<li id="homelabel" class="active" role="button"><a id="home"><i class="fas fa-map-marked-alt"></i> Home</a></li>
-							<li id="aboutlabel"><a id="about" role="button"><i class="fas fa-address-card"></i> About</a></li>
+							<li id="aboutlabel" role="button"><a id="about" role="button"><i class="fas fa-address-card"></i> About</a></li>
 							<li><a href="https://github.com/YuvalShor/BeachMap" role="button"><i class="fab fa-github"></i> GitHub</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right col">
 						
 							<li class="navbtn"><a href="#" class="loggedinButtons" id="loggedInEmail" style="pointer-events: none; cursor: default; display: none;"></a></li>
-							<li class="navbtn"><a href="#" class="loggedinButtons" style="display: none;"><i class="fas fa-user-cog"></i> Manage App</a></li>
+							<li class="navbtn" id="adminlabel" role="button"><a id="admin" class="loggedinButtons" role="button" style="display: none;"><i class="fas fa-user-cog"></i> Manage App</a></li>
+							<!-- <li class="navbtn" id="adminlabel" role="button"><a href="#" id="admin" class="loggedinButtons" style="display: none;"><i class="fas fa-user-cog"></i> Manage App</a></li> !-->
 							<li class="navbtn"><a href="#" class="loggedinButtons" onclick="logout()" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 							
 							<li id="adminLogin" class="dropdown">
@@ -87,6 +88,9 @@
 				<div class="about animate slideIn hide" style="width: 100%; height: 100%; font-size: 24px;">
 					<iframe class="jumbotron" src="about.html" title="BeachMap GIS Applet" style="background: none; width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
 				</div>
+				<div class="admin animate slideIn hide" style="width: 100%; height: 100%; font-size: 24px;">
+					<iframe class="jumbotron" src="admin.html" title="BeachMap App Management" style="background: none; width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -113,6 +117,8 @@
 						$('#homelabel').removeClass('active');
 						$('#aboutlabel').addClass('active');
 						$('.about').removeClass('hide');
+						$('#adminlabel').removeClass('active');
+						$('.admin').addClass('hide');
 					});
 
 					$('#home').click(function(){
@@ -120,8 +126,19 @@
 						$('#aboutlabel').removeClass('active');
 						$('#homelabel').addClass('active');
 						$('.gisapplet').removeClass('hide');
+						$('#adminlabel').removeClass('active');
+						$('.admin').addClass('hide');
 					});
 					
+					$('#admin').click(function(){
+						$('.about').addClass('hide');
+						$('#aboutlabel').removeClass('active');
+						$('#homelabel').removeClass('active');
+						$('.gisapplet').addClass('hide');
+						$('#adminlabel').addClass('active');
+						$('.admin').removeClass('hide');
+					});
+
 					$('.darkmode-toggle').append('🌓');
 				})
 			</script>
