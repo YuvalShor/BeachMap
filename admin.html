@@ -35,11 +35,17 @@
 					if (!user) { 
 						window.alert('Not connected to admin.');
 						document.getElementById('body').style.display = "none";
-						window.parent.document.getElementById('adminPage').setAttribute('src', '#');
+						
+						if (window.location.pathname.split("/").pop() == 'admin.html') {
+							window.location.href = 'index.html';
+						}
 					}
 					else {
 						document.getElementById('body').style.display = "block";
-						window.parent.document.getElementById('adminPage').setAttribute('src', 'admin.html');
+
+						if (window.parent.document.getElementById('adminPage').getAttribute('src') != 'admin.html') {
+							window.parent.document.getElementById('adminPage').setAttribute('src', 'admin.html');
+						}
 					}
 				});
 		</script>
