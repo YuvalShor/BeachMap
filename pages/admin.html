@@ -29,7 +29,7 @@
 			firebase.initializeApp(firebaseConfig);
 			firebase.analytics();
 		</script>
-		<script src="./js/script.js"></script>
+		<script src="./js/firebaseAuth.js"></script>
 		<script>
 				firebase.auth().onAuthStateChanged(function(user) {
 					if (!user) { 
@@ -43,8 +43,8 @@
 					else {
 						document.getElementById('body').style.display = "block";
 
-						if (window.parent.document.getElementById('adminPage').getAttribute('src') != 'admin.html') {
-							window.parent.document.getElementById('adminPage').setAttribute('src', 'admin.html');
+						if (window.parent.document.getElementById('adminPage').getAttribute('src') != './pages/admin.html') {
+							window.parent.document.getElementById('adminPage').setAttribute('src', './pages/admin.html');
 						}
 					}
 				});

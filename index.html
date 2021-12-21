@@ -1,182 +1,357 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- Bootstrap CSS -->
-		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-		<!-- Font Awesome CSS -->
-		<link href="./style/all.css" rel="stylesheet">
-		<!-- jQuery -->
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<!-- Bootstrap JS -->
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-		<script src="https://unpkg.com/darkmode-js@1.3.4/lib/darkmode-js.js"></script>
-		<!-- Required meta tags -->		
-		<meta charset="utf-8">
-		<meta name="viewport" content="initial-scale=1">		
-		
-		<link rel="stylesheet" href="./style/stylesheet.css">
-	
-		<title>BeachMap GIS App</title>
-	</head>
-	<body>
-	<div class="container text-center animate slideIn"><img src="./assets/logo.svg" alt="BeachMap Logo" style="width: 170px; height: 90px;"></div>
-	<div class="container justify-content-center">
-		<div class="row">	
-			<div id="topheader">
-			  <nav class="navbar navbar-default">
-				<div class="container-fluid">
-				    <div class="navbar-header">
-						<a class="navbar-brand visible-xs animate slideIn" href="#">BeachMap</a>
-						<button type="button" class="navbar-toggle collapsed animate slideIn" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-				    </div>
-					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav col">
-							<li id="homelabel" class="active" role="button"><a id="home"><i class="fas fa-map-marked-alt"></i> Home</a></li>
-							<li id="aboutlabel" role="button"><a id="about" role="button"><i class="fas fa-address-card"></i> About</a></li>
-							<li><a href="https://github.com/YuvalShor/BeachMap" role="button"><i class="fab fa-github"></i> GitHub</a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right col">
-						
-							<li class="navbtn"><a href="#" class="loggedinButtons" id="loggedInEmail" style="pointer-events: none; cursor: default; display: none;"></a></li>
-							<li class="navbtn" id="adminlabel" role="button"><a id="admin" class="loggedinButtons" role="button" style="display: none;"><i class="fas fa-user-cog"></i> Manage App</a></li>
-							<li class="navbtn"><a href="#" class="loggedinButtons" onclick="logout()" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-							
-							<li id="adminLogin" class="dropdown">
-							  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-sign-in-alt"></i> <b>Admin Login</b></a>
-								<ul id="login-dp" class="dropdown-menu animate slideIn">
-									<li>
-										 <div class="row">
-												<div class="col-md-12">
-													<form class="form" id="login" role="form" method="post" action="javascript:" accept-charset="UTF-8" id="login-nav">
-														<div class="form-group">
-															<label class="sr-only" for="usernameEmail">Email</label>
-															<input type="email" class="form-control" id="emailInput" placeholder="Email" required>
-														</div>
-														<div class="form-group">
-															<label class="sr-only" for="passwordLabel">Password</label>
-															<input type="password" class="form-control" id="passwordInput" placeholder="Password" required>
-															<div class="help-block text-left"><a href="#" onclick="forgotPassword()">Forgot Password?</a></div>
-															<button id="signinBtn" type="submit" class="btn btn-dark btn-block" onclick="login()">Sign in</button>
-														</div>
-													</form>
-												</div>
-										 </div>
-									</li>
-								</ul>
-							</li>
-						</ul>
-				   </div>
-				</div>
-			  </nav>
-			</div>
-		</div>				
-	</div>
-	
-	<div class="container justify-content-center">
-		<div class="row">
-			<div class="animate slideIn darkmode-ignore" style="background-image: url('assets/background.jpg'); height: 74vh; background-size: cover; border-radius: 5px; box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1); width: 100%; padding: 25px;">
-				<div class="gisapplet animate slideIn" style="width: 100%; height: 100%; font-size: 24px;">
-					<iframe class="jumbotron" src="assets/gis_applet/index.html" title="BeachMap GIS Applet" style="width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
-				</div>
-				<div class="about animate slideIn hide" style="width: 100%; height: 100%; font-size: 24px;">
-					<iframe class="jumbotron" src="about.html" title="BeachMap GIS Applet" style="background: none; width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
-				</div>
-				<div class="admin animate slideIn hide" style="width: 100%; height: 100%; font-size: 24px;">
-					<iframe class="jumbotron" id="adminPage" src="" title="BeachMap App Management" style="background: none; width: 100%; height: 100%; overflow: none; border: none; padding: 0;" scrolling = "no"></iframe>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="container justify-content-center">
+  <head>
+    <!-- Bootstrap CSS -->
 
-			<!-- Copyright -->
-			<footer class="row text-center animate slideIn">
-				<p>This project has been created by Hila Tewel, Yuval Shor & Eliad Tzemach for Mark Israel's GIS course</p>
-				<p>Students at Holon Institule of Technology.</p>
-			</footer>
-			<!-- Copyright -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+      crossorigin="anonymous"
+    />
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/darkmode-js@1.3.4/lib/darkmode-js.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1" />
 
-	</div>
+    <link rel="stylesheet" href="stylesheet.css" />
 
-			<!-- Placed at the end of the document so the pages load faster -->
-			<script type="module">
-				new Darkmode().showWidget();
-			</script>
-			<script>
-				$(function(){
-					$('#about').click(function(){
-						$('.gisapplet').addClass('hide');
-						$('#homelabel').removeClass('active');
-						$('#aboutlabel').addClass('active');
-						$('.about').removeClass('hide');
-						$('#adminlabel').removeClass('active');
-						$('.admin').addClass('hide');
-					});
+    <title>BeachMap GIS App</title>
+  </head>
+  <body>
+    <div class="container text-center animate slideIn">
+      <img
+        src="./assets/logo.svg"
+        alt="BeachMap Logo"
+        style="width: 170px; height: 90px"
+      />
+    </div>
+    <div class="container justify-content-center">
+      <div class="row">
+        <div id="topheader">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand visible-xs animate slideIn" href="#"
+                  >BeachMap</a
+                >
+                <button
+                  type="button"
+                  class="navbar-toggle collapsed animate slideIn"
+                  data-toggle="collapse"
+                  data-target="#bs-example-navbar-collapse-1"
+                  aria-expanded="false"
+                >
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div
+                class="collapse navbar-collapse"
+                id="bs-example-navbar-collapse-1"
+              >
+                <ul class="nav navbar-nav col">
+                  <li id="homelabel" class="active" role="button">
+                    <a id="home"><i class="fas fa-map-marked-alt"></i> Home</a>
+                  </li>
+                  <li id="aboutlabel" role="button">
+                    <a id="about" role="button"
+                      ><i class="fas fa-address-card"></i> About</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/YuvalShor/BeachMap"
+                      role="button"
+                      ><i class="fab fa-github"></i> GitHub</a
+                    >
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right col">
+                  <li class="navbtn">
+                    <a
+                      href="#"
+                      class="loggedinButtons"
+                      id="loggedInEmail"
+                      style="
+                        pointer-events: none;
+                        cursor: default;
+                        display: none;
+                      "
+                    ></a>
+                  </li>
+                  <li class="navbtn" id="adminlabel" role="button">
+                    <a
+                      id="admin"
+                      class="loggedinButtons"
+                      role="button"
+                      style="display: none"
+                      ><i class="fas fa-user-cog"></i> Manage App</a
+                    >
+                  </li>
+                  <li class="navbtn">
+                    <a
+                      href="#"
+                      class="loggedinButtons"
+                      onclick="logout()"
+                      style="display: none"
+                      ><i class="fas fa-sign-out-alt"></i> Logout</a
+                    >
+                  </li>
 
-					$('#home').click(function(){
-						$('.about').addClass('hide');
-						$('#aboutlabel').removeClass('active');
-						$('#homelabel').addClass('active');
-						$('.gisapplet').removeClass('hide');
-						$('#adminlabel').removeClass('active');
-						$('.admin').addClass('hide');
-					});
-					
-					$('#admin').click(function(){
-						$('.about').addClass('hide');
-						$('#aboutlabel').removeClass('active');
-						$('#homelabel').removeClass('active');
-						$('.gisapplet').addClass('hide');
-						$('#adminlabel').addClass('active');
-						$('.admin').removeClass('hide');
-					});
+                  <li id="adminLogin" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      ><i class="fas fa-sign-in-alt"></i> <b>Admin Login</b></a
+                    >
+                    <ul id="login-dp" class="dropdown-menu animate slideIn">
+                      <li>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <form
+                              class="form"
+                              id="login"
+                              role="form"
+                              method="post"
+                              action="javascript:"
+                              accept-charset="UTF-8"
+                              id="login-nav"
+                            >
+                              <div class="form-group">
+                                <label class="sr-only" for="usernameEmail"
+                                  >Email</label
+                                >
+                                <input
+                                  type="email"
+                                  class="form-control"
+                                  id="emailInput"
+                                  placeholder="Email"
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label class="sr-only" for="passwordLabel"
+                                  >Password</label
+                                >
+                                <input
+                                  type="password"
+                                  class="form-control"
+                                  id="passwordInput"
+                                  placeholder="Password"
+                                  required
+                                />
+                                <div class="help-block text-left">
+                                  <a href="#" onclick="forgotPassword()"
+                                    >Forgot Password?</a
+                                  >
+                                </div>
+                                <button
+                                  id="signinBtn"
+                                  type="submit"
+                                  class="btn btn-dark btn-block"
+                                  onclick="login()"
+                                >
+                                  Sign in
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
 
-					$('.darkmode-toggle').append('🌓');
-				})
-			</script>
-			
-			<!-- Openlayers -->
-			<link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" />
-			<script type="text/javascript" src="https://openlayers.org/en/latest/build/ol.js"></script>
-			<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
+    <div class="container justify-content-center">
+      <div class="row">
+        <div
+          class="animate slideIn darkmode-ignore"
+          style="
+            background-image: url('assets/background.jpg');
+            height: 74vh;
+            background-size: cover;
+            border-radius: 5px;
+            box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            padding: 25px;
+          "
+        >
+          <div
+            class="gisapplet animate slideIn"
+            style="width: 100%; height: 100%; font-size: 24px"
+          >
+            <iframe
+              class="jumbotron"
+              src="assets/gis_applet/index.html"
+              title="BeachMap GIS Applet"
+              style="
+                width: 100%;
+                height: 100%;
+                overflow: none;
+                border: none;
+                padding: 0;
+              "
+              scrolling="no"
+            ></iframe>
+          </div>
+          <div
+            class="about animate slideIn hide"
+            style="width: 100%; height: 100%; font-size: 24px"
+          >
+            <iframe
+              class="jumbotron"
+              src="./pages/about.html"
+              title="BeachMap GIS Applet"
+              style="
+                background: none;
+                width: 100%;
+                height: 100%;
+                overflow: none;
+                border: none;
+                padding: 0;
+              "
+              scrolling="no"
+            ></iframe>
+          </div>
+          <div
+            class="admin animate slideIn hide"
+            style="width: 100%; height: 100%; font-size: 24px"
+          >
+            <iframe
+              class="jumbotron"
+              id="adminPage"
+              src=""
+              title="BeachMap App Management"
+              style="
+                background: none;
+                width: 100%;
+                height: 100%;
+                overflow: none;
+                border: none;
+                padding: 0;
+              "
+              scrolling="no"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
 
-			<!-- ol-ext -->
-			<link rel="stylesheet" href="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.css" />
-			<script type="text/javascript" src="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.js"></script>
-	
-			<!-- The core Firebase JS SDK is always required and must be listed first -->
-			<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <div class="container justify-content-center">
+      <!-- Copyright -->
+      <footer class="row text-center animate slideIn">
+        <p>
+          This project has been created by Hila Tewel, Yuval Shor & Eliad
+          Tzemach for Mark Israel's GIS course
+        </p>
+        <p>Students at Holon Institule of Technology.</p>
+      </footer>
+      <!-- Copyright -->
+    </div>
 
-			<!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="module">
+      new Darkmode().showWidget();
+    </script>
+    <script>
+      $(function () {
+        $('#about').click(function () {
+          $('.gisapplet').addClass('hide');
+          $('#homelabel').removeClass('active');
+          $('#aboutlabel').addClass('active');
+          $('.about').removeClass('hide');
+          $('#adminlabel').removeClass('active');
+          $('.admin').addClass('hide');
+        });
+
+        $('#home').click(function () {
+          $('.about').addClass('hide');
+          $('#aboutlabel').removeClass('active');
+          $('#homelabel').addClass('active');
+          $('.gisapplet').removeClass('hide');
+          $('#adminlabel').removeClass('active');
+          $('.admin').addClass('hide');
+        });
+
+        $('#admin').click(function () {
+          $('.about').addClass('hide');
+          $('#aboutlabel').removeClass('active');
+          $('#homelabel').removeClass('active');
+          $('.gisapplet').addClass('hide');
+          $('#adminlabel').addClass('active');
+          $('.admin').removeClass('hide');
+        });
+
+        $('.darkmode-toggle').append('🌓');
+      });
+    </script>
+
+    <!-- Openlayers -->
+    <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" />
+    <script
+      type="text/javascript"
+      src="https://openlayers.org/en/latest/build/ol.js"
+    ></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
+
+    <!-- ol-ext -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.js"
+    ></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
 				 https://firebase.google.com/docs/web/setup#available-libraries -->
-			<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
-			<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
-			<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
-			
-			<script>
-			  // Your web app's Firebase configuration
-			  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-			  var firebaseConfig = {
-				apiKey: "AIzaSyDQ_ijg9xd0luoJpWiNh8c9YAoK1upY7ig",
-				authDomain: "beachmap-f7222.firebaseapp.com",
-				projectId: "beachmap-f7222",
-				storageBucket: "beachmap-f7222.appspot.com",
-				messagingSenderId: "586664418142",
-				appId: "1:586664418142:web:85e451dad00927d13a0dcf",
-				measurementId: "G-XLPTHQ1G4Q"
-			  };
-			  // Initialize Firebase
-			  firebase.initializeApp(firebaseConfig);
-			  firebase.analytics();
-			</script>
-			
-			<script src="./js/script.js"></script>
-	</body>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: 'AIzaSyDQ_ijg9xd0luoJpWiNh8c9YAoK1upY7ig',
+        authDomain: 'beachmap-f7222.firebaseapp.com',
+        projectId: 'beachmap-f7222',
+        storageBucket: 'beachmap-f7222.appspot.com',
+        messagingSenderId: '586664418142',
+        appId: '1:586664418142:web:85e451dad00927d13a0dcf',
+        measurementId: 'G-XLPTHQ1G4Q',
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+
+    <script src="./js/firebaseAuth.js"></script>
+  </body>
 </html>

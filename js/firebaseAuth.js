@@ -33,7 +33,7 @@ function login() {
 		.then((userCredential) => {
 		// Signed in
 		var user = userCredential.user;
-		$('#adminPage').attr('src', "admin.html");
+		$('#adminPage').attr('src', "./pages/admin.html");
 		})
 		.catch((error) => {
 			var errorCode = error.code;
